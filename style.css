@@ -1,154 +1,129 @@
-/* ===== FUENTE Y COLORES BASE ===== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
 :root {
   --color-primario: #6a1b9a;
   --color-secundario: #9c4dff;
   --color-fondo: #f8f7ff;
   --color-texto: #333;
   --color-borde: #e0d0f0;
+  --color-error: #c62828;
 }
 
-/* ===== ESTILOS GENERALES ===== */
 body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--color-fondo);
   margin: 0;
-  padding: 20px;
+  padding: 0;
   color: var(--color-texto);
 }
 
-h1 {
+header {
   text-align: center;
-  color: var(--color-primario);
-  margin: 5px 0 10px;
-  font-size: 1.8rem;
-  font-weight: 600;
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, var(--color-primario), #8a2be2);
+  color: white;
+  margin-bottom: 2rem;
 }
 
-/* ===== MALLA INTERACTIVA ===== */
+h1 {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+}
+
+.subtitle {
+  margin: 0.3rem 0 0;
+  font-weight: 400;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+#malla-container {
+  width: 95%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+}
+
 #malla {
   display: flex;
-  gap: 15px;
-  padding: 15px 0;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  gap: 1.2rem;
+  padding: 0 1rem;
+  min-width: fit-content;
 }
 
 .semestre {
   background: white;
+  padding: 1rem;
   border-radius: 12px;
-  padding: 15px;
-  width: 220px;
-  min-height: 300px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-top: 4px solid var(--color-secundario);
-  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  width: 240px;
+  min-height: 320px;
+  border-top: 4px solid var(--color-primario);
   transition: transform 0.2s;
+  flex-shrink: 0;
 }
 
 .semestre:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 .semestre h2 {
   color: var(--color-primario);
+  margin: 0 0 0.8rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-borde);
   font-size: 1.1rem;
-  margin: 0 0 12px 0;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed var(--color-borde);
-  font-weight: 500;
 }
 
 .ramos {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.6rem;
 }
 
 .ramo {
-  background: #f5f0ff;
-  border: none;
-  border-left: 3px solid var(--color-secundario);
-  padding: 10px;
+  background-color: white;
+  border: 1px solid var(--color-borde);
+  padding: 0.6rem;
   border-radius: 8px;
-  font-size: 0.82rem;
   text-align: left;
-  cursor: pointer;
+  font-size: 0.82rem;
   transition: all 0.2s;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-/* Texto con ellipsis para nombres largos */
-.ramo > div {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.ramo::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--color-primario);
 }
 
 .ramo:hover:not(:disabled) {
-  background: #e9d6ff;
-  box-shadow: 0 2px 8px rgba(156, 77, 255, 0.15);
+  background-color: #f9f5ff;
+  box-shadow: 0 2px 6px rgba(106, 13, 173, 0.1);
 }
 
 .ramo:disabled {
-  background: #f5f5f5;
-  color: #aaa;
+  background-color: #f5f5f5;
+  color: #999;
   cursor: not-allowed;
-  border-left-color: #ddd;
+  border-color: #eee;
 }
 
 .ramo.aprobado {
-  background: #e1c4ff;
-  font-weight: 500;
+  background-color: #f3e9ff;
+  border-color: var(--color-secundario);
   color: var(--color-primario);
+  font-weight: 500;
 }
 
-/* Efecto al desbloquear */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-  100% { transform: scale(1); }
-}
-
-.ramo.desbloqueado {
-  animation: pulse 0.6s;
-}
-
-/* ===== SCROLLBAR PERSONALIZADA ===== */
-#malla::-webkit-scrollbar {
-  height: 8px;
-}
-
-#malla::-webkit-scrollbar-track {
-  background: #f1e9ff;
-  border-radius: 4px;
-}
-
-#malla::-webkit-scrollbar-thumb {
-  background: var(--color-secundario);
-  border-radius: 4px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  body {
-    padding: 15px 10px;
-  }
-  
-  .semestre {
-    width: 200px;
-    min-height: 280px;
-    padding: 12px;
-  }
-  
-  h1 {
-    font-size: 1.5rem;
-  }
-}
-
-/* ===== MEJORA PARA RAMOS APROBADOS ===== */
 .ramo.aprobado::after {
   content: "✓";
   position: absolute;
@@ -159,10 +134,75 @@ h1 {
   font-weight: bold;
 }
 
-/* ===== AJUSTE PARA CRÉDITOS ===== */
-.ramo .creditos {
+.nombre-ramo {
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sct-ramo {
   font-size: 0.7rem;
   color: var(--color-primario);
   opacity: 0.8;
-  margin-top: 2px;
+}
+
+.btn-reset {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.6rem 1.2rem;
+  background: #ffebee;
+  color: var(--color-error);
+  border: 1px solid #ef9a9a;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-reset:hover {
+  background: #ffcdd2;
+  transform: translateY(-1px);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); box-shadow: 0 0 0 3px rgba(169, 110, 234, 0.3); }
+  100% { transform: scale(1); }
+}
+
+.ramo.desbloqueado {
+  animation: pulse 1s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .semestre {
+    width: 200px;
+    min-height: 280px;
+  }
+  
+  header {
+    padding: 1rem 0;
+  }
+  
+  h1 {
+    font-size: 1.4rem;
+  }
+  
+  .ramos {
+    gap: 0.4rem;
+  }
+  
+  .ramo {
+    padding: 0.5rem;
+  }
+}
+
+@media (hover: none) {
+  .ramo:active:not(:disabled) {
+    transform: scale(0.98);
+  }
 }
