@@ -117,7 +117,7 @@ function crearMalla() {
   ramos.forEach((sem) => {
     const div = document.createElement("div");
     div.className = "semestre";
-    div.innerHTML = <h2>Semestre ${sem.semestre}</h2><div class="ramos"></div>;
+    div.innerHTML = `<h2>Semestre ${sem.semestre}</h2><div class="ramos"></div>`;
     sem.ramos.forEach((ramo) => {
       const btn = document.createElement("button");
       btn.className = "ramo";
