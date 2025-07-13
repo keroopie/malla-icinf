@@ -1,5 +1,6 @@
+
 const ramos = [
-  // SEMESTRE 1 (completo)
+  // PRIMER AÑO
   {
     semestre: 1,
     ramos: [
@@ -10,7 +11,6 @@ const ramos = [
       { id: "formacion-1", nombre: "Formación Integral", sct: 2 },
     ]
   },
-  // SEMESTRE 2 (completo)
   {
     semestre: 2,
     ramos: [
@@ -22,7 +22,6 @@ const ramos = [
       { id: "formacion-3", nombre: "Formación Integral", sct: 2 },
     ]
   },
-  // SEMESTRE 3 (completo)
   {
     semestre: 3,
     ramos: [
@@ -34,7 +33,6 @@ const ramos = [
       { id: "admin-general", nombre: "Administración General", sct: 3, abre: ["gestion-contable", "teoria-sistemas", "gestion-estrategica"] },
     ]
   },
-  // SEMESTRE 4 (completo)
   {
     semestre: 4,
     ramos: [
@@ -46,7 +44,6 @@ const ramos = [
       { id: "formacion-4", nombre: "Formación Integral", sct: 2 },
     ]
   },
-  // SEMESTRE 5 (completo)
   {
     semestre: 5,
     ramos: [
@@ -58,7 +55,6 @@ const ramos = [
       { id: "gestion-contable", nombre: "Gestión Contable", sct: 4, req: ["admin-general"], abre: ["gestion-financiera"] },
     ]
   },
-  // SEMESTRE 6 (completo)
   {
     semestre: 6,
     ramos: [
@@ -70,7 +66,6 @@ const ramos = [
       { id: "practica-1", nombre: "Práctica Profesional I", sct: 6 },
     ]
   },
-  // SEMESTRE 7 (completo)
   {
     semestre: 7,
     ramos: [
@@ -83,7 +78,6 @@ const ramos = [
       { id: "formacion-5", nombre: "Formación Integral", sct: 2 },
     ]
   },
-  // SEMESTRE 8 (completo)
   {
     semestre: 8,
     ramos: [
@@ -95,7 +89,6 @@ const ramos = [
       { id: "practica-2", nombre: "Práctica Profesional II", sct: 9 },
     ]
   },
-  // SEMESTRE 9 (completo)
   {
     semestre: 9,
     ramos: [
@@ -108,33 +101,6 @@ const ramos = [
       { id: "electivo-3", nombre: "Electivo Profesional III", sct: 5 },
     ]
   },
-  // SEMESTRE 10 (completo)
-  {
-    semestre: 10,
-    ramos: [
-      { id: "proyecto", nombre: "Proyecto de Título", sct: 10, req: ["anteproyecto"] },
-      { id: "seguridad", nombre: "Seguridad Informática", sct: 4 },
-      { id: "electivo-4", nombre: "Electivo Profesional IV", sct: 5 },
-      { id: "electivo-5", nombre: "Electivo Profesional V", sct: 5 },
-      { id: "electivo-6", nombre: "Electivo Profesional VI", sct: 5 },
-    ]
-  },
-];
-const ramos = [
-  // SEMESTRE 1 
-  {
-    semestre: 1,
-    ramos: [
-      { id: "algebra", nombre: "Álgebra y Trigonometría", sct: 8, abre: ["calculo-dif", "algebra-lineal"] },
-      { id: "intro-ingenieria", nombre: "Intro. a la Ingeniería", sct: 6 },
-      { id: "comunicacion", nombre: "Comunicación Oral y Escrita", sct: 4 },
-      { id: "intro-programacion", nombre: "Intro. a la Programación", sct: 9, abre: ["poo"] },
-      { id: "formacion-1", nombre: "Formación Integral", sct: 2 },
-    ]
-  },
-  // SEMESTRE 2 al 9 (completos - mismo formato que el semestre 1)
-  // ... *Asegúrate de incluir TODOS los semestres intermedios* ...
-  // SEMESTRE 10
   {
     semestre: 10,
     ramos: [
@@ -147,43 +113,44 @@ const ramos = [
   },
 ];
 
-// ===== PERSISTENCIA ===== //
-let estadoAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || {};
+// ===== SISTEMA DE PERSISTENCIA ===== //
+let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || {};
 
 function crearMalla() {
   const malla = document.getElementById("malla");
-  if (!malla) return;
+  
+  if (!malla) {
+    console.error("No se encontró el elemento con ID 'malla'");
+    return;
+  }
 
-  // Limpiar malla existente (por si hay recargas)
+  // Limpiar malla existente
   malla.innerHTML = '';
 
   ramos.forEach((sem) => {
-    const divSemestre = document.createElement("div");
-    divSemestre.className = "semestre";
-    divSemestre.innerHTML = `<h2>Semestre ${sem.semestre}</h2><div class="ramos"></div>`;
+    const div = document.createElement("div");
+    div.className = "semestre";
+    div.innerHTML = `<h2>Semestre ${sem.semestre}</h2><div class="ramos"></div>`;
     
     sem.ramos.forEach((ramo) => {
       const btn = document.createElement("button");
       btn.className = "ramo";
+      btn.innerHTML = `<strong>${ramo.nombre}</strong><br><small>${ramo.sct} SCT</small>`;
       btn.id = ramo.id;
-      btn.innerHTML = `
-        <div class="nombre-ramo">${ramo.nombre}</div>
-        <div class="sct-ramo">${ramo.sct} créditos</div>
-      `;
       
-      // Verificar si ya estaba aprobado
-      if (estadoAprobados[ramo.id]) {
+      // Verificar si el ramo ya estaba aprobado
+      if (ramosAprobados[ramo.id]) {
         btn.classList.add("aprobado");
         btn.disabled = true;
       } else {
-        btn.disabled = ramo.req && ramo.req.some(id => !estadoAprobados[id]);
+        btn.disabled = ramo.req && ramo.req.some(id => !ramosAprobados[id]);
       }
       
       btn.onclick = () => aprobarRamo(ramo);
-      divSemestre.querySelector(".ramos").appendChild(btn);
+      div.querySelector(".ramos").appendChild(btn);
     });
     
-    malla.appendChild(divSemestre);
+    malla.appendChild(div);
   });
 }
 
@@ -193,15 +160,15 @@ function aprobarRamo(ramo) {
   btn.disabled = true;
   
   // Guardar en localStorage
-  estadoAprobados[ramo.id] = true;
-  localStorage.setItem('ramosAprobados', JSON.stringify(estadoAprobados));
+  ramosAprobados[ramo.id] = true;
+  localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
   
   // Desbloquear ramos dependientes
-  ramos.forEach(sem => {
-    sem.ramos.forEach(r => {
-      if (r.req?.includes(ramo.id)) {
+  ramos.forEach((sem) => {
+    sem.ramos.forEach((r) => {
+      if (r.req && r.req.includes(ramo.id)) {
         const ramoDependiente = document.getElementById(r.id);
-        if (ramoDependiente && !estadoAprobados[r.id]) {
+        if (ramoDependiente && !ramosAprobados[r.id]) {
           ramoDependiente.disabled = false;
           ramoDependiente.classList.add("desbloqueado");
           setTimeout(() => ramoDependiente.classList.remove("desbloqueado"), 1000);
@@ -214,7 +181,7 @@ function aprobarRamo(ramo) {
 function resetearProgreso() {
   if (confirm("¿Borrar todos tus progresos guardados?")) {
     localStorage.removeItem('ramosAprobados');
-    estadoAprobados = {};
+    ramosAprobados = {};
     location.reload();
   }
 }
