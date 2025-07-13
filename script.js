@@ -114,19 +114,27 @@ const ramos = [
 
 function crearMalla() {
   const malla = document.getElementById("malla");
+  
+  if (!malla) {
+    console.error("No se encontró el elemento con ID 'malla'");
+    return;
+  }
+
   ramos.forEach((sem) => {
     const div = document.createElement("div");
     div.className = "semestre";
     div.innerHTML = `<h2>Semestre ${sem.semestre}</h2><div class="ramos"></div>`;
+    
     sem.ramos.forEach((ramo) => {
       const btn = document.createElement("button");
       btn.className = "ramo";
-      btn.innerText = ramo.nombre;
+      btn.innerHTML = `<strong>${ramo.nombre}</strong><br><small>${ramo.sct} SCT</small>`;
       btn.id = ramo.id;
       btn.disabled = ramo.req && ramo.req.length > 0;
       btn.onclick = () => aprobarRamo(ramo);
       div.querySelector(".ramos").appendChild(btn);
     });
+    
     malla.appendChild(div);
   });
 }
@@ -135,17 +143,24 @@ function aprobarRamo(ramo) {
   const btn = document.getElementById(ramo.id);
   btn.classList.add("aprobado");
   btn.disabled = true;
+  
+  // Desbloquear ramos que dependían de este
   ramos.forEach((sem) => {
     sem.ramos.forEach((r) => {
       if (r.req && r.req.includes(ramo.id)) {
         r.req = r.req.filter((id) => id !== ramo.id);
         if (r.req.length === 0) {
           const desbloqueo = document.getElementById(r.id);
-          if (desbloqueo) desbloqueo.disabled = false;
+          if (desbloqueo) {
+            desbloqueo.disabled = false;
+            desbloqueo.classList.add("desbloqueado");
+            setTimeout(() => desbloqueo.classList.remove("desbloqueado"), 1000);
+          }
         }
       }
     });
   });
 }
 
-window.onload = crearMalla;
+// Inicialización
+document.addEventListener("DOMContentLoaded", crearMalla);
