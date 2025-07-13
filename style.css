@@ -9,6 +9,7 @@ body {
 h1 {
   text-align: center;
   color: #6a0dad;
+  margin-bottom: 2rem;
 }
 
 #malla {
@@ -16,50 +17,76 @@ h1 {
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 2rem;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 
 .semestre {
   background-color: #ebe4f7;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   flex-shrink: 0;
+  min-height: 400px;
 }
 
 .semestre h2 {
   color: #6a0dad;
+  margin-top: 0;
+  border-bottom: 2px solid #d3b9f2;
+  padding-bottom: 0.5rem;
 }
 
 .ramos {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
 }
 
 .ramo {
   background-color: #d3b9f2;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 0.9rem;
 }
 
 .ramo:hover:not(:disabled) {
   background-color: #c09ae5;
+  transform: translateY(-2px);
 }
 
 .ramo:disabled {
   background-color: #e0e0e0;
   color: #999;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .ramo.aprobado {
   background-color: #a96eea;
   color: white;
   font-weight: bold;
+}
+
+/* Scrollbar personalizada */
+#malla::-webkit-scrollbar {
+  height: 10px;
+}
+
+#malla::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#malla::-webkit-scrollbar-thumb {
+  background: #c09ae5;
+  border-radius: 10px;
+}
+
+#malla::-webkit-scrollbar-thumb:hover {
+  background: #a96eea;
 }
