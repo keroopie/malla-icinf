@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Malla Interactiva Ingeniería Civil en Informática</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Interactiva - Ingeniería Civil en Informática</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Malla Interactiva Ingeniería Civil en Informática</h1>
-  <div id="malla"></div>
+  <header>
+    <h1>Malla Curricular Interactiva</h1>
+    <p class="subtitle">Ingeniería Civil en Informática</p>
+  </header>
+  <main>
+    <div id="malla-container">
+      <div id="malla"></div>
+    </div>
+    <button onclick="resetearProgreso()" class="btn-reset">Reiniciar Progreso</button>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
