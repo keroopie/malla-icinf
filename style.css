@@ -1,92 +1,168 @@
+/* ===== FUENTE Y COLORES BASE ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --color-primario: #6a1b9a;
+  --color-secundario: #9c4dff;
+  --color-fondo: #f8f7ff;
+  --color-texto: #333;
+  --color-borde: #e0d0f0;
+}
+
+/* ===== ESTILOS GENERALES ===== */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5fc;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-fondo);
   margin: 0;
-  padding: 2rem;
-  color: #333;
+  padding: 20px;
+  color: var(--color-texto);
 }
 
 h1 {
   text-align: center;
-  color: #6a0dad;
-  margin-bottom: 2rem;
+  color: var(--color-primario);
+  margin: 5px 0 10px;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
+/* ===== MALLA INTERACTIVA ===== */
 #malla {
   display: flex;
-  flex-wrap: nowrap;
+  gap: 15px;
+  padding: 15px 0;
   overflow-x: auto;
-  gap: 2rem;
-  padding-bottom: 2rem;
+  scrollbar-width: thin;
 }
 
 .semestre {
-  background-color: #ebe4f7;
-  padding: 1.5rem;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  padding: 15px;
+  width: 220px;
+  min-height: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid var(--color-secundario);
   flex-shrink: 0;
-  min-height: 400px;
+  transition: transform 0.2s;
+}
+
+.semestre:hover {
+  transform: translateY(-3px);
 }
 
 .semestre h2 {
-  color: #6a0dad;
-  margin-top: 0;
-  border-bottom: 2px solid #d3b9f2;
-  padding-bottom: 0.5rem;
+  color: var(--color-primario);
+  font-size: 1.1rem;
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--color-borde);
+  font-weight: 500;
 }
 
 .ramos {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  margin-top: 1rem;
+  gap: 8px;
 }
 
 .ramo {
-  background-color: #d3b9f2;
+  background: #f5f0ff;
   border: none;
-  padding: 0.8rem;
+  border-left: 3px solid var(--color-secundario);
+  padding: 10px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.82rem;
   text-align: left;
-  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Texto con ellipsis para nombres largos */
+.ramo > div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ramo:hover:not(:disabled) {
-  background-color: #c09ae5;
-  transform: translateY(-2px);
+  background: #e9d6ff;
+  box-shadow: 0 2px 8px rgba(156, 77, 255, 0.15);
 }
 
 .ramo:disabled {
-  background-color: #e0e0e0;
-  color: #999;
+  background: #f5f5f5;
+  color: #aaa;
   cursor: not-allowed;
+  border-left-color: #ddd;
 }
 
 .ramo.aprobado {
-  background-color: #a96eea;
-  color: white;
-  font-weight: bold;
+  background: #e1c4ff;
+  font-weight: 500;
+  color: var(--color-primario);
 }
 
-/* Scrollbar personalizada */
+/* Efecto al desbloquear */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.ramo.desbloqueado {
+  animation: pulse 0.6s;
+}
+
+/* ===== SCROLLBAR PERSONALIZADA ===== */
 #malla::-webkit-scrollbar {
-  height: 10px;
+  height: 8px;
 }
 
 #malla::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: #f1e9ff;
+  border-radius: 4px;
 }
 
 #malla::-webkit-scrollbar-thumb {
-  background: #c09ae5;
-  border-radius: 10px;
+  background: var(--color-secundario);
+  border-radius: 4px;
 }
 
-#malla::-webkit-scrollbar-thumb:hover {
-  background: #a96eea;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 15px 10px;
+  }
+  
+  .semestre {
+    width: 200px;
+    min-height: 280px;
+    padding: 12px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== MEJORA PARA RAMOS APROBADOS ===== */
+.ramo.aprobado::after {
+  content: "✓";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-primario);
+  font-weight: bold;
+}
+
+/* ===== AJUSTE PARA CRÉDITOS ===== */
+.ramo .creditos {
+  font-size: 0.7rem;
+  color: var(--color-primario);
+  opacity: 0.8;
+  margin-top: 2px;
 }
