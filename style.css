@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5fc;
+  margin: 0;
+  padding: 2rem;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #6a0dad;
+}
+
+#malla {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 2rem;
+  padding-bottom: 1rem;
+}
+
+.semestre {
+  background-color: #ebe4f7;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.semestre h2 {
+  color: #6a0dad;
+}
+
+.ramos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ramo {
+  background-color: #d3b9f2;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ramo:hover:not(:disabled) {
+  background-color: #c09ae5;
+}
+
+.ramo:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: default;
+}
+
+.ramo.aprobado {
+  background-color: #a96eea;
+  color: white;
+  font-weight: bold;
+}
